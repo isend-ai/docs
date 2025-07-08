@@ -1,0 +1,132 @@
+
+> Troubleshoot problems using this comprehensive breakdown of all isend.ai API error codes.
+
+## Error Schema
+
+isend.ai uses standard HTTP response codes for success and error responses. Each error is also classified with a specific type for easier debugging.
+
+### `invalid_idempotency_key`
+
+- **Status:** 400
+- **Message:** The key must be between 1–256 characters.
+- **Suggested Action:** Retry with a valid idempotency key.
+
+### `validation_error`
+
+- **Status:** 400
+- **Message:** One or more fields in the request are invalid.
+- **Suggested Action:** Review the response message for specific details.
+
+### `missing_api_key`
+
+- **Status:** 401
+- **Message:** API key missing from Authorization header.
+- **Suggested Action:** Include `Authorization: Bearer YOUR_API_KEY` in your request.
+
+### `restricted_api_key`
+
+- **Status:** 401
+- **Message:** API key only allowed to send emails.
+- **Suggested Action:** Use a key with full access if performing other actions.
+
+### `invalid_api_key`
+
+- **Status:** 403
+- **Message:** The provided API key is invalid.
+- **Suggested Action:** Verify or regenerate your [API key](https://isend.ai/dashboard/api-keys).
+
+### `testing_restriction`
+
+- **Status:** 403
+- **Message:** Emails can only be sent to your own address in testing mode.
+- **Suggested Action:** [Verify a domain](https://isend.ai/dashboard/domains) to lift this restriction.
+
+### `not_found`
+
+- **Status:** 404
+- **Message:** Endpoint does not exist.
+- **Suggested Action:** Ensure the request URL is correct.
+
+### `method_not_allowed`
+
+- **Status:** 405
+- **Message:** HTTP method not supported on this endpoint.
+- **Suggested Action:** Use the allowed method (GET, POST, etc.) for that endpoint.
+
+### `invalid_idempotent_request`
+
+- **Status:** 409
+- **Message:** Same idempotency key used with a different payload.
+- **Suggested Action:** Use a unique key or match payload to the original.
+
+### `concurrent_idempotent_requests`
+
+- **Status:** 409
+- **Message:** Request in progress for this idempotency key.
+- **Suggested Action:** Retry after the initial request completes.
+
+### `invalid_attachment`
+
+- **Status:** 422
+- **Message:** Attachment requires either `content` or `path`.
+- **Suggested Action:** Include one of those fields when adding attachments.
+
+### `invalid_from_address`
+
+- **Status:** 422
+- **Message:** Invalid `from` field format.
+- **Suggested Action:** Use `email@domain.com` or `Name <email@domain.com>` format.
+
+### `invalid_access`
+
+- **Status:** 422
+- **Message:** Access must be "full_access" or "sending_access".
+- **Suggested Action:** Use an API key with appropriate access level.
+
+### `invalid_parameter`
+
+- **Status:** 422
+- **Message:** A provided parameter is not valid (e.g., malformed UUID).
+- **Suggested Action:** Verify the parameter and retry.
+
+### `invalid_region`
+
+- **Status:** 422
+- **Message:** Region must be one of: "us-east-1", "eu-west-1", or "sa-east-1".
+- **Suggested Action:** Provide a valid supported region.
+
+### `missing_required_field`
+
+- **Status:** 422
+- **Message:** Required fields missing from request body.
+- **Suggested Action:** Review error message and add the missing fields.
+
+### `daily_quota_exceeded`
+
+- **Status:** 429
+- **Message:** Email send quota exceeded for the day.
+- **Suggested Action:** [Upgrade your plan](https://isend.ai/dashboard/billing) or wait 24 hours.
+
+### `rate_limit_exceeded`
+
+- **Status:** 429
+- **Message:** Too many requests sent too quickly.
+- **Suggested Action:** Throttle requests or [contact support](https://isend.ai/contact) for increased limits.
+
+### `security_error`
+
+- **Status:** 451
+- **Message:** Potential security issue detected.
+- **Suggested Action:** Refer to the error message or [contact support](https://isend.ai/contact).
+
+### `application_error`
+
+- **Status:** 500
+- **Message:** An internal error occurred.
+- **Suggested Action:** Retry later or check [status.isend.ai](https://status.isend.ai).
+
+### `internal_server_error`
+
+- **Status:** 500
+- **Message:** Unexpected server error.
+- **Suggested Action:** Retry later or check [status.isend.ai](https://status.isend.ai).

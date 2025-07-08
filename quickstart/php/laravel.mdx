@@ -1,0 +1,120 @@
+
+# Send emails with Laravel
+
+> Learn how to send your first email using **Laravel and the isend.ai PHP SDK**.
+
+---
+
+## Prerequisites
+
+To get the most out of this guide, you will need to:
+
+- [Create an API key](https://isend.ai/dashboard/settings/api-keys)
+- [Connect your provider](https://isend.ai/dashboard/settings/connectors)
+- [Create a template](https://isend.ai/dashboard/templates)
+
+---
+
+## 1. Install
+
+Install the isend.ai SDK for Laravel using Composer:
+
+```bash
+composer require isend/isend-php
+```
+
+---
+
+## 2. Configuration
+
+### API key
+
+Add your isend API key in your `.env` file:
+
+```ini
+ISEND_API_KEY=is_b867c3390755d64915c563923484a6
+```
+
+### Mail driver (optional)
+
+If you're using Laravel's built-in `Mail` functionality with custom transport, you can define an additional driver if needed. Otherwise, you can use isend's SDK directly.
+
+---
+
+## 3. Send an Email
+
+Use the SDK directly from any Laravel service, controller, or job.
+
+### Example using a controller
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Isend\isend;
+
+class EmailController extends Controller
+{
+    public function send(Request $request)
+    {
+        $client = new isend(env('ISEND_API_KEY'));
+
+        $client->emails->send([
+            'from' => 'onboarding@isend.dev',
+            'to' => $request->input('email'),
+            'template' => 'welcome_emailer',
+            'data_mapping' => [
+                'name' => 'John Doe',
+                'email' => $request->input('email')
+            ]
+        ]);
+
+        return response()->json(['message' => 'Email sent']);
+    }
+}
+```
+
+---
+
+## 4. Webhooks (Optional)
+
+isend.ai supports webhooks for delivery, bounce, open, and click tracking.
+
+### Setup
+
+- Register a public HTTPS URL at: [Webhooks Settings](https://isend.ai/dashboard/webhooks)
+- In your Laravel app, add the route:
+
+```php
+Route::post('/isend/webhook', [WebhookController::class, 'handle']);
+```
+
+### CSRF
+
+Add an exception in `VerifyCsrfToken.php`:
+
+```php
+protected $except = [
+    'isend/*',
+];
+```
+
+### Signature Verification
+
+Set the webhook secret in `.env`:
+
+```ini
+ISEND_WEBHOOK_SECRET=whsec_xxxxxx
+```
+
+---
+
+## 5. Try it yourself
+
+See the full Laravel example on GitHub:
+
+[**→ View Laravel Example Repo**](https://github.com/isendhq/isend-laravel-example)
+
+---

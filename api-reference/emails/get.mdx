@@ -1,0 +1,58 @@
+---
+title: 'Send Email'
+openapi: 'POST /api/send-email'
+---
+# Send Email
+
+> Send templated emails through the iSend API using dynamic placeholders with a single API call.
+
+## Body Parameters
+
+- **from** (string, required): Sender's email address. Can include a friendly name (`"Your Name <you@example.com>"`).
+- **to** (string or array, required): Recipient's email address. Can be a single email or an array.
+- **template** (string, required): The identifier of the template to be used for this email.
+- **data_mapping** (object, required): Key-value pairs to inject into the template placeholders dynamically.
+
+## Headers
+
+- **Authorization** (string, required): Bearer token using your API key. Example: `Authorization: Bearer is_xxxxxxx`
+- **Content-Type**: `application/json`
+
+## PHP Example
+
+```php
+<?php
+$client = new isend('YOUR_API_KEY');
+$client->emails->send([
+  'from' => 'your@email.com',
+  'to' => 'delivered@isend.dev',
+  'template' => 'welcome_emailer',
+  'data_mapping' => [
+    'name' => 'John Doe',
+    'email' => 'john@example.com'
+  ]
+]);
+```
+
+## Sample Request
+
+```json
+{
+  "from": "your@email.com",
+  "to": "delivered@isend.dev",
+  "template": "welcome_emailer",
+  "data_mapping": {
+    "name": "John Doe",
+    "email": "john@example.com"
+  }
+}
+```
+
+## Sample Response
+
+```json
+{
+  "id": "abc1234-def5-6789-xyz-00000000",
+  "status": "success"
+}
+```

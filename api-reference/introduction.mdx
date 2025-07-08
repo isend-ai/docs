@@ -1,33 +1,61 @@
----
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
----
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+> Learn how to authenticate and interact with the isend.ai API, including base URL, headers, error codes, and limits.
 
-## Welcome
+## Base URL
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+All requests to the isend.ai API must use **HTTPS** and follow RESTful conventions.
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+**Base URL:**
+
+```
+https://api.isend.ai
+```
+
+Requests over plain HTTP are rejected for security reasons.
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+Authenticate your requests by including your **API key** in the `Authorization` header using the Bearer token format.
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
 ```
+Authorization: Bearer is_xxxxxxxxxxxxxxxxxxxxx
+```
+
+You can [generate an API key](/settings/api-keys) from the isend.ai dashboard.
+
+## Response Codes
+
+The API uses standard HTTP status codes to indicate the result of requests.
+
+| Status | Description                             |
+| ------ | --------------------------------------- |
+| `200`  | The request was successful.             |
+| `400`  | Invalid request. Check your parameters. |
+| `401`  | Missing or malformed API key.           |
+| `403`  | API key is invalid or unauthorized.     |
+| `404`  | Resource not found.                     |
+| `429`  | Rate limit exceeded.                    |
+| `5xx`  | Server-side error. Try again later.     |
+
+<Info>
+  For a detailed list of possible API errors, see [Error Codes](/api-reference/errors).
+</Info>
+
+## Rate Limits
+
+The default rate limit is **2 requests per second** per API key. If your integration requires a higher limit, [contact support](/support) to request an increase.
+
+When you exceed the rate limit, you’ll receive a `429 Too Many Requests` error.
+
+More details: [Rate Limits](/api-reference/rate-limit)
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="How does pagination work with the API?">
+    Currently, our API endpoints do not support pagination. As we expand our dataset capabilities, pagination will be introduced.
+  </Accordion>
+  <Accordion title="Is the API versioned?">
+    Not yet. All requests default to the current version. Versioning will be added via headers in future releases.
+  </Accordion>
+</AccordionGroup>

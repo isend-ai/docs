@@ -1,0 +1,125 @@
+
+# Send emails with Symfony
+
+> Learn how to send your first email using the **Symfony Mailer with isend.ai**.
+
+---
+
+## Prerequisites
+
+To get the most out of this guide, you will need to:
+
+- [Create an API key](https://isend.ai/dashboard/settings/api-keys)
+- [Connect your provider](https://isend.ai/dashboard/settings/connectors)
+- [Create a template](https://isend.ai/dashboard/templates)
+
+---
+
+## 1. Install
+
+First, install the Mailer Component:
+
+```bash
+composer require symfony/mailer
+```
+
+To send HTTP requests via the SDK, you may use:
+
+```bash
+composer require symfony/http-client
+```
+
+If you plan to handle webhooks:
+
+```bash
+composer require symfony/webhook
+```
+
+---
+
+## 2. Configuration
+
+In your `.env.local` file, add:
+
+```env
+MAILER_DSN=isend+api://ISEND_API_KEY@default
+ISEND_WEBHOOK_SECRET=whsec_xxxxxxxx
+```
+
+Replace `ISEND_API_KEY` and `ISEND_WEBHOOK_SECRET` with your credentials.
+
+---
+
+## 3. Send your first email
+
+Inject `MailerInterface` into your controller and use it like this:
+
+```php
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+
+public function __construct(
+    private readonly MailerInterface $mailer,
+) {}
+
+public function send(): void
+{
+    $this->mailer->send(
+        (new Email())
+            ->from('Acme <onboarding@isend.dev>')
+            ->to('delivered@isend.dev')
+            ->subject('Hello world')
+            ->html('<strong>it works!</strong>')
+    );
+}
+```
+
+Learn more in the [Symfony Mailer docs](https://symfony.com/doc/current/mailer.html#creating-sending-messages)
+
+---
+
+## 4. Webhooks (Optional)
+
+Create a listener class:
+
+```php
+#[AsRemoteEventConsumer('mailer_isend')]
+readonly class IsendWebhookListener implements ConsumerInterface
+{
+    public function __construct(
+        #[Autowire(param: 'kernel.project_dir')] private string $projectDir,
+    ) {}
+
+    public function consume(RemoteEvent $event): void
+    {
+        if ($event instanceof MailerDeliveryEvent) {
+            // handle delivery
+        } elseif ($event instanceof MailerEngagementEvent) {
+            // handle open/click
+        }
+    }
+}
+```
+
+Configure webhook routing:
+
+```yaml
+framework:
+  webhook:
+    routing:
+      mailer_isend:
+        service: 'mailer.webhook.request_parser.isend'
+        secret: '%env(ISEND_WEBHOOK_SECRET)%'
+```
+
+Register your webhook URL in [isend Webhooks](https://isend.ai/dashboard/webhooks)
+
+---
+
+## 5. Try it yourself
+
+See the Symfony integration example on GitHub:
+
+[**→ View Symfony Example Repo**](https://github.com/isendhq/isend-symfony-example)
+
+---

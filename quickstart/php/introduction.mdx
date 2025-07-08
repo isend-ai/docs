@@ -1,0 +1,70 @@
+
+# Send emails with PHP
+
+> Learn how to send your first email using the **isend.ai PHP SDK**.
+
+---
+
+## Prerequisites
+
+Before you begin, make sure you:
+
+- [Create an API key](https://isend.ai/dashboard/settings/api-keys)
+- [Connect your email provider](https://isend.ai/dashboard/settings/connectors)
+- [Create or activate an email template](https://isend.ai/dashboard/templates)
+
+Prefer a video walkthrough? _(Coming soon)_
+
+---
+
+## 1. Install
+
+Install the isend.ai PHP SDK using Composer:
+
+```bash
+composer require isend/isend-php
+```
+
+---
+
+## 2. Send an Email Using a Template
+
+Use a template by its name or ID and pass dynamic variables using `data_mapping`.
+
+```php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Isend\isend;
+
+$client = new isend('is_b867c3390755d64915c563923484a6');
+
+$client->emails->send([
+  'from' => 'onboarding@isend.dev',
+  'to' => 'delivered@isend.dev',
+  'template' => 'welcome_emailer', // or use 'template_id' => 1
+  'data_mapping' => [
+    'name' => 'John Doe',
+    'email' => 'john@example.com'
+  ]
+]);
+```
+
+---
+
+## 3. Try it Yourself
+
+See a working example on GitHub:
+
+[**→ View PHP Example Repo**](https://github.com/isendhq/isend-php-example)
+
+---
+
+## Next Steps
+
+- [View API Reference](https://isend.ai/docs/api-reference)
+- [Build a custom email template](https://isend.ai/dashboard/templates)
+- [Rotate or revoke API keys](https://isend.ai/dashboard/settings/api-keys)
+
+---
