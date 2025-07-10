@@ -1,7 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
   "name": "iSend.ai Docs",
+  "theme": "mint",
+  "appearance": {
+    "default": "light",
+    "strict": true
+  },
   "seo": {
     "metatags": {
       "og:title": "iSend.ai Docs – Developer API for Email Delivery",
@@ -33,7 +37,23 @@
             "pages": [
               {
                 "group": "PHP",
-                "pages": ["quickstart/php/introduction", "quickstart/php/laravel", "quickstart/php/symfony"]
+                "pages": ["quickstart/php/introduction"]
+              },
+              {
+                "group": "Node.js",
+                "pages": ["quickstart/nodejs/introduction"]
+              },
+              {
+                "group": "Java",
+                "pages": ["quickstart/java/introduction"]
+              },
+              {
+                "group": "Ruby",
+                "pages": ["quickstart/ruby/introduction"]
+              },
+              {
+                "group": "Python",
+                "pages": ["quickstart/python/introduction"]
               }
             ]
           }
@@ -60,16 +80,10 @@
     "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "href": "http://localhost:1650/login"
     }
   },
   "footer": {

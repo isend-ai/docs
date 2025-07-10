@@ -1,0 +1,95 @@
+# Send Emails with Java
+
+> Use the official **isend.ai Java SDK** to send emails with templates through any email provider.
+
+---
+
+## 1. Install
+
+**Maven**  
+Add the following dependency to your `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>ai.isend</groupId>
+    <artifactId>java-sdk</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+**Gradle**  
+Add this to your `build.gradle`:
+
+```groovy
+implementation 'ai.isend:java-sdk:1.0.0'
+```
+
+---
+
+## 2. Send an Email (Java)
+
+```java
+import ai.isend.ISendClient;
+import ai.isend.EmailData;
+import ai.isend.ISendException;
+
+// Initialize the client
+ISendClient client = new ISendClient("your-api-key-here");
+
+// Send email using template
+EmailData emailData = new EmailData(124, "hi@isend.ai")
+    .addDataMapping("name", "ISend");
+
+try {
+    Map<String, Object> response = client.sendEmail(emailData);
+    System.out.println("Email sent successfully!");
+    System.out.println(response);
+} catch (ISendException e) {
+    System.err.println("Error: " + e.getMessage());
+}
+```
+
+---
+
+## 3. Alternative Approach (Map-based)
+
+```java
+Map<String, Object> emailData = new HashMap<>();
+emailData.put("template_id", 124);
+emailData.put("to", "hi@isend.ai");
+
+Map<String, Object> dataMapping = new HashMap<>();
+dataMapping.put("name", "ISend");
+emailData.put("dataMapping", dataMapping);
+
+Map<String, Object> response = client.sendEmail(emailData);
+```
+
+---
+
+## 4. Error Handling
+
+```java
+try {
+    Map<String, Object> response = client.sendEmail(emailData);
+    System.out.println("Success: " + response);
+} catch (ISendException e) {
+    System.err.println("Error: " + e.getMessage());
+    e.printStackTrace();
+}
+```
+
+---
+
+## 5. Requirements
+
+- Java 8 or higher  
+- Maven or Gradle
+
+---
+
+## 6. GitHub Repo
+
+Check out the repository on GitHub:
+
+[**→ View Java SDK Repo**](https://github.com/isend-ai/java-sdk)

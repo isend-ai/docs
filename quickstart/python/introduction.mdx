@@ -1,0 +1,106 @@
+# Send Emails with Python
+
+> Use the official **isend.ai Python SDK** to send transactional emails through any major email provider.
+
+---
+
+## 1. Install
+
+**Using pip**
+
+```bash
+pip install isend-ai
+```
+
+**From source**
+
+```bash
+git clone https://github.com/isend-ai/python-sdk.git
+cd python-sdk
+pip install -e .
+```
+
+---
+
+## 2. Send an Email
+
+```python
+from isend import ISendClient
+
+# Initialize the client
+client = ISendClient('your-api-key-here')
+
+# Email data
+email_data = {
+    'template_id': 124,
+    'to': 'hi@isend.ai',
+    'dataMapping': {
+        'name': 'ISend'
+    }
+}
+
+response = client.send_email(email_data)
+print(response)
+```
+
+---
+
+## 3. Custom Configuration
+
+```python
+from isend import ISendClient
+
+client = ISendClient('your-api-key-here', config={'timeout': 60})
+
+email_data = {
+    'template_id': 124,
+    'to': 'hi@isend.ai',
+    'dataMapping': {
+        'name': 'ISend'
+    }
+}
+
+response = client.send_email(email_data)
+```
+
+---
+
+## 4. Error Handling
+
+```python
+from isend import ISendClient
+import requests
+
+try:
+    client = ISendClient('your-api-key-here')
+    response = client.send_email({
+        'template_id': 124,
+        'to': 'hi@isend.ai',
+        'dataMapping': {
+            'name': 'ISend'
+        }
+    })
+    print("Email sent successfully!")
+    print(response)
+except ValueError as e:
+    print(f"Validation error: {e}")
+except requests.RequestException as e:
+    print(f"Network error: {e}")
+except Exception as e:
+    print(f"Unexpected error: {e}")
+```
+
+---
+
+## 5. Requirements
+
+- Python 3.6 or higher  
+- `requests` library
+
+---
+
+## 6. GitHub Repo
+
+Check out the repository on GitHub:
+
+[**→ View Python SDK Repo**](https://github.com/isend-ai/python-sdk)

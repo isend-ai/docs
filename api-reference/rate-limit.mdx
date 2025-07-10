@@ -1,7 +1,6 @@
-
 > Understand rate limits and how to increase them when using the isend.ai API.
 
-The isend.ai API uses response headers to indicate your current rate limit status, following the [IETF standard](https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-ratelimit-headers):
+The isend.ai API uses response headers to indicate your current rate limit status, following the IETF standard:
 
 | Header name           | Description                                                         |
 | --------------------- | ------------------------------------------------------------------- |
@@ -12,7 +11,7 @@ The isend.ai API uses response headers to indicate your current rate limit statu
 
 The default rate limit is **2 requests per second**. Trusted senders may request an increase.
 
-If you exceed the rate limit, the API will return a `429` response error. To review these events, filter for status `429` in your [isend.ai logs](https://isend.ai/logs?status=429).
+If you exceed the rate limit, the API will return a `429` response error. To review these events, filter for status `429` in your isend.ai logs.
 
 ### Tips to Avoid Rate Limits
 
@@ -21,4 +20,4 @@ If you exceed the rate limit, the API will return a `429` response error. To rev
 - Avoid sending requests concurrently unless necessary.
 - Monitor your usage through headers in API responses.
 
-If you have unique needs or expect higher traffic, [contact our support team](https://isend.ai/contact) to request a rate increase.
+If you have unique needs or expect higher traffic, contact our support team to request a rate increase.

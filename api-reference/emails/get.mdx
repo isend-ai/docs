@@ -2,37 +2,31 @@
 title: 'Send Email'
 openapi: 'POST /api/send-email'
 ---
+
 # Send Email
 
 > Send templated emails through the iSend API using dynamic placeholders with a single API call.
 
-## Body Parameters
+## Endpoint
 
-- **from** (string, required): Sender's email address. Can include a friendly name (`"Your Name <you@example.com>"`).
-- **to** (string or array, required): Recipient's email address. Can be a single email or an array.
-- **template** (string, required): The identifier of the template to be used for this email.
-- **data_mapping** (object, required): Key-value pairs to inject into the template placeholders dynamically.
+`POST https://api.isend.ai/emails/send`
 
 ## Headers
 
-- **Authorization** (string, required): Bearer token using your API key. Example: `Authorization: Bearer is_xxxxxxx`
+- **Authorization** (string, required): Bearer token using your API key.  
+  Example: `Authorization: Bearer is_xxxxxxx`
 - **Content-Type**: `application/json`
 
-## PHP Example
+## Request Body Parameters
 
-```php
-<?php
-$client = new isend('YOUR_API_KEY');
-$client->emails->send([
-  'from' => 'your@email.com',
-  'to' => 'delivered@isend.dev',
-  'template' => 'welcome_emailer',
-  'data_mapping' => [
-    'name' => 'John Doe',
-    'email' => 'john@example.com'
-  ]
-]);
-```
+| Field         | Type               | Required | Description                                                                          |
+|---------------|--------------------|----------|--------------------------------------------------------------------------------------|
+| `from`        | `string`           | ✅        | Sender's email. Use `name <email@domain.com>` format if needed.                     |
+| `to`          | `string` or `array`| ✅        | Email or array of emails for recipients.                                            |
+| `template`    | `string`           | ✅        | Identifier or name of the template to send.                                         |
+| `data_mapping`| `object`           | ✅        | Dynamic placeholder values to inject into the template.                             |
+
+---
 
 ## Sample Request
 
@@ -48,6 +42,8 @@ $client->emails->send([
 }
 ```
 
+---
+
 ## Sample Response
 
 ```json
@@ -56,3 +52,29 @@ $client->emails->send([
   "status": "success"
 }
 ```
+
+---
+
+## PHP SDK Example
+
+```php
+<?php
+$client = new isend('YOUR_API_KEY');
+$client->emails->send([
+  'from' => 'your@email.com',
+  'to' => 'delivered@isend.dev',
+  'template' => 'welcome_emailer',
+  'data_mapping' => [
+    'name' => 'John Doe',
+    'email' => 'john@example.com'
+  ]
+]);
+```
+
+---
+
+## Notes
+
+- Ensure the `template` exists and is active on your account.
+- `data_mapping` must match the placeholders used in your template.
+- You may use an array for `to` if you want to send to multiple recipients.

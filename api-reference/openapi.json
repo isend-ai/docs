@@ -1,13 +1,12 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "iSend Email API",
-    "version": "1.0.0",
-    "description": "API for sending templated emails through iSend"
+    "title": "Generated API from MDX",
+    "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "http://www.isend.ai"
+      "url": "https://api.example.com"
     }
   ],
   "paths": {
@@ -15,111 +14,43 @@
       "post": {
         "summary": "Send an email",
         "description": "Sends a templated email to a recipient using dynamic data.",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
         "x-codeSamples": [
           {
             "lang": "PHP",
             "label": "PHP",
             "source": "<?php\n$client = new isend('YOUR_API_KEY');\n$client->emails->send([\n  'from' => 'your@email.com',\n  'to' => 'delivered@isend.dev',\n  'template' => 'welcome_emailer',\n  'data_mapping' => [\n    'name' => 'John Doe',\n    'email' => 'john@example.com'\n  ]\n]);"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "api_key",
-                  "to",
-                  "from",
-                  "template",
-                  "data_mapping"
-                ],
-                "properties": {
-                  "api_key": {
-                    "type": "string",
-                    "description": "API key for authenticating the request"
-                  },
-                  "to": {
-                    "type": "string",
-                    "format": "email",
-                    "description": "Recipient email address"
-                  },
-                  "from": {
-                    "type": "string",
-                    "format": "email",
-                    "description": "Sender email address"
-                  },
-                  "template": {
-                    "type": "string",
-                    "description": "Template identifier to use for the email"
-                  },
-                  "data_mapping": {
-                    "type": "object",
-                    "description": "Key-value pairs to fill in the template placeholders",
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "example": {
-                      "name": "John Doe",
-                      "email": "john@example.com"
-                    }
-                  }
-                }
-              },
-              "example": {
-                "api_key": "is_b867c3390755d64915c563923484a6",
-                "to": "delivered@isend.dev",
-                "from": "your@email.com",
-                "template": "welcome_emailer",
-                "data_mapping": {
-                  "name": "John Doe",
-                  "email": "john@example.com"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Email sent successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "messageId": {
-                      "type": "string",
-                      "example": "abc123"
-                    }
-                  }
-                }
-              }
-            }
           },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\n\nheaders = {\n    \"Authorization\": \"Bearer YOUR_API_KEY\",\n    \"Content-Type\": \"application/json\"\n}\n\ndata = {\n    \"from\": \"your@email.com\",\n    \"to\": \"delivered@isend.dev\",\n    \"template\": \"welcome_emailer\",\n    \"data_mapping\": {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\"\n    }\n}\n\nresponse = requests.post(\"https://api.example.com/api/send-email\", json=data, headers=headers)\nprint(response.json())"
           },
-          "401": {
-            "description": "Authentication failed"
+          {
+            "lang": "Node.js",
+            "label": "Node.js",
+            "source": "const axios = require('axios');\n\nconst response = await axios.post('https://api.example.com/api/send-email', {\n  from: 'your@email.com',\n  to: 'delivered@isend.dev',\n  template: 'welcome_emailer',\n  data_mapping: {\n    name: 'John Doe',\n    email: 'john@example.com'\n  }\n}, {\n  headers: {\n    'Authorization': 'Bearer YOUR_API_KEY',\n    'Content-Type': 'application/json'\n  }\n});\n\nconsole.log(response.data);"
+          },
+          {
+            "lang": "Java",
+            "label": "Java",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"from\\\":\\\"your@email.com\\\",\\\"to\\\":\\\"delivered@isend.dev\\\",\\\"template\\\":\\\"welcome_emailer\\\",\\\"data_mapping\\\":{\\\"name\\\":\\\"John Doe\\\",\\\"email\\\":\\\"john@example.com\\\"}}\");\n\nRequest request = new Request.Builder()\n  .url(\"https://api.example.com/api/send-email\")\n  .post(body)\n  .addHeader(\"Authorization\", \"Bearer YOUR_API_KEY\")\n  .addHeader(\"Content-Type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby",
+            "label": "Ruby",
+            "source": "require 'net/http'\nrequire 'uri'\nrequire 'json'\n\nuri = URI.parse(\"https://api.example.com/api/send-email\")\nheader = {\n  'Content-Type': 'application/json',\n  'Authorization': 'Bearer YOUR_API_KEY'\n}\n\nbody = {\n  from: 'your@email.com',\n  to: 'delivered@isend.dev',\n  template: 'welcome_emailer',\n  data_mapping: {\n    name: 'John Doe',\n    email: 'john@example.com'\n  }\n}\n\nhttp = Net::HTTP.new(uri.host, uri.port)\nhttp.use_ssl = true\nrequest = Net::HTTP::Post.new(uri.request_uri, header)\nrequest.body = body.to_json\n\nresponse = http.request(request)\nputs response.body"
+          },
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -X POST https://api.example.com/api/send-email \\\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"from\": \"your@email.com\",\n    \"to\": \"delivered@isend.dev\",\n    \"template\": \"welcome_emailer\",\n    \"data_mapping\": {\n      \"name\": \"John Doe\",\n      \"email\": \"john@example.com\"\n    }\n  }'"
           }
-        }
+        ]
       }
     }
   }

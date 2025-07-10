@@ -1,0 +1,106 @@
+# Send Emails with Node.js
+
+> Use the official **isend.ai Node.js SDK** to send emails using your existing email infrastructure.
+
+---
+
+## 1. Install
+
+Install the isend.ai Node.js SDK:
+
+```bash
+npm install @isend-ai/nodejs-sdk
+```
+
+---
+
+## 2. Send an Email Using JavaScript
+
+```js
+const { ISendClient } = require('@isend-ai/nodejs-sdk');
+
+// Initialize the client
+const client = new ISendClient('your-api-key-here');
+
+// Send email using template
+const emailData = {
+  template_id: 124,
+  to: 'hi@isend.ai',
+  dataMapping: {
+    name: 'ISend'
+  }
+};
+
+client.sendEmail(emailData)
+  .then(response => {
+    console.log('Email sent successfully!', response);
+  })
+  .catch(error => {
+    console.error('Error sending email:', error.message);
+  });
+```
+
+---
+
+## 3. Send an Email Using TypeScript
+
+```ts
+import { ISendClient } from '@isend-ai/nodejs-sdk';
+
+const client = new ISendClient('your-api-key-here');
+
+async function sendEmail() {
+  try {
+    const emailData = {
+      template_id: 124,
+      to: 'hi@isend.ai',
+      dataMapping: {
+        name: 'ISend'
+      }
+    };
+
+    const response = await client.sendEmail(emailData);
+    console.log('Email sent successfully!', response);
+  } catch (error) {
+    console.error('Error sending email:', error.message);
+  }
+}
+
+sendEmail();
+```
+
+---
+
+## 4. Error Handling
+
+```ts
+try {
+  const response = await client.sendEmail({
+    template_id: 124,
+    to: 'hi@isend.ai',
+    dataMapping: {
+      name: 'ISend'
+    }
+  });
+} catch (error) {
+  console.error('Error:', error.message);
+  console.error('Status:', error.status);
+  console.error('Code:', error.code);
+}
+```
+
+---
+
+## 5. Requirements
+
+- Node.js 14.0.0 or higher
+- npm or yarn
+
+---
+
+
+## 6. GitHub Repo
+
+Check out the repository on GitHub:
+
+[**→ View Node.js SDK Repo**](https://github.com/isend-ai/nodejs-sdk)

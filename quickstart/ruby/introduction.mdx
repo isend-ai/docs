@@ -1,0 +1,157 @@
+# Send Emails with Ruby
+
+> Use the official **isend.ai Ruby SDK** to send transactional emails using any provider via isend.ai.
+
+---
+
+## 1. Install
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'isend'
+```
+
+Then run:
+
+```bash
+bundle install
+```
+
+Or install it directly:
+
+```bash
+gem install isend
+```
+
+---
+
+## 2. Send an Email
+
+```ruby
+require 'isend'
+
+# Initialize the client
+client = ISend::Client.new('your-api-key-here')
+
+# Email data
+email_data = {
+  template_id: 124,
+  to: 'hi@isend.ai',
+  dataMapping: {
+    name: 'ISend'
+  }
+}
+
+response = client.send_email(email_data)
+puts response
+```
+
+---
+
+## 3. With Custom Configuration
+
+```ruby
+client = ISend::Client.new('your-api-key-here', timeout: 60)
+
+email_data = {
+  template_id: 124,
+  to: 'hi@isend.ai',
+  dataMapping: {
+    name: 'ISend',
+    company: 'Your Company'
+  }
+}
+
+response = client.send_email(email_data)
+```
+
+---
+
+## 4. Error Handling
+
+```ruby
+begin
+  response = client.send_email({
+    template_id: 124,
+    to: 'hi@isend.ai',
+    dataMapping: {
+      name: 'ISend'
+    }
+  })
+rescue ISend::InvalidArgumentError => e
+  puts "Invalid argument: #{e.message}"
+rescue ISend::ApiError => e
+  puts "API error: #{e.message}"
+rescue ISend::Error => e
+  puts "General error: #{e.message}"
+end
+```
+
+---
+
+## 5. Rails Integration
+
+**config/initializers/isend.rb**
+
+```ruby
+ISEND_CLIENT = ISend::Client.new(ENV['ISEND_API_KEY'])
+```
+
+**Usage in app**
+
+```ruby
+class UserMailer
+  def self.send_welcome_email(user)
+    email_data = {
+      template_id: 124,
+      to: user.email,
+      dataMapping: {
+        name: user.name,
+        company: user.company
+      }
+    }
+
+    ISEND_CLIENT.send_email(email_data)
+  end
+end
+```
+
+---
+
+## 6. Background Job Example
+
+```ruby
+class EmailJob < ApplicationJob
+  queue_as :default
+
+  def perform(user_id, template_id)
+    user = User.find(user_id)
+
+    email_data = {
+      template_id: template_id,
+      to: user.email,
+      dataMapping: {
+        name: user.name
+      }
+    }
+
+    ISEND_CLIENT.send_email(email_data)
+  end
+end
+```
+
+---
+
+## Requirements
+
+- Ruby 2.0 or higher  
+- HTTParty gem
+
+---
+
+## GitHub Repo
+
+Check out the repository on GitHub:
+
+[**→ View Ruby SDK Repo**](https://github.com/isend-ai/ruby-sdk)
